@@ -35,12 +35,12 @@ function STool.LeftClick(self, trace)
 		
 		if (trace.Entity:GetClass() == "sent_catmullrom_camera") and (ply:GetShootPos():Distance(trace.HitPos) < 512) then
 			trace.Entity:SetFaceTravelDir(facetraveldir)
-			--print(bank_on_turn)
+			print(bank_on_turn)
 			
 			trace.Entity:SetBankOnTurn(bank_on_turn)
 			trace.Entity:SetBankDeltaMax(bank_delta_max)
 			trace.Entity:SetBankMultiplier(bank_multiplyer)
-			--print(trace.Entity.BankOnTurn)
+			print(trace.Entity.BankOnTurn)
 			trace.Entity:SetZoom(zoom or 75)
 			
 			trace.Entity:SetEnableRoll(roll_enabled)
@@ -52,9 +52,9 @@ function STool.LeftClick(self, trace)
 	
 	CatmullRomCams.Tracks[plyID]      = CatmullRomCams.Tracks[plyID]      or {}
 	CatmullRomCams.Tracks[plyID][key] = CatmullRomCams.Tracks[plyID][key] or {}
-
+	
 	local track_index = #CatmullRomCams.Tracks[plyID][key] + 1
-	--print(track_index)
+	print(track_index)
 	local camera = ents.Create("sent_catmullrom_camera")
 	if not (camera and camera.IsValid and camera:IsValid()) then return end
 	

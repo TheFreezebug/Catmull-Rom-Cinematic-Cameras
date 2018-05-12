@@ -1,12 +1,12 @@
-AddCSLuaFile("cl_init.lua")
-AddCSLuaFile("shared.lua")
+AddCSLuaFile("cl_init.lua") 
+AddCSLuaFile("shared.lua") 
 include("shared.lua")
 
 local CAMERA_MODEL = Model("models/dav0r/camera.mdl")
 
 ENT.KeyTriggerInformation = {}
 
-function ENT:Initialize()
+function ENT:Initialize() 
 	self.Entity:SetModel(CAMERA_MODEL)
 	self.Entity:PhysicsInit(SOLID_VPHYSICS)
 	self.Entity:SetMoveType(MOVETYPE_VPHYSICS)
@@ -93,15 +93,15 @@ function ENT:LoadForMap(filename)
 	
 	self.IsMapController = true
 	self:SetNWBool("IsMapController", true)
-
+	
 	if not CatmullRomCams then
-		include("autorun/sh_catmullromcams")
+		include("autorun/sh_CatmullRomCams")
 	end
-
+	
 	self:InitController()
-
-	local data = file.Read("catmullromcameratracks/" .. filename .. ".txt")
-
+	
+	local data = file.Read("CatmullRomCameraTracks/" .. filename .. ".txt")
+	
 	if not data then return Error("Could not load filename track '" .. filename .. "' from disk! " .. tostring(self) .. " map controller will not work!!!\n") end
 	
 	data = util.KeyValuesToTable(data)
@@ -118,30 +118,25 @@ function ENT:LoadForMap(filename)
 	self.CatmullRomController.DurationList = {}
 	
 	self.CatmullRomController.Spline = {}
-
+	
 	self.CatmullRomController:AddPointAngle(count, lastent:GetPos(), lastent:GetAngles())
-
-	while count<128 do
+	
+	while true do
 		count = count + 1
-
+		
 		local ent = lastent:GetNWEntity("ChildCamera")
-
+		
 		if ent and ent:IsValid() then
 			lastent = ent
-
+			
 			local dur = lastent:GetNWFloat("Duration")
-
+			
 			self.CatmullRomController:AddPointAngle(count, lastent:GetPos(), lastent:GetAngles(), (dur > 0) and dur or 2)
-
+			
 			self.CatmullRomController.EntityList[count] = lastent
 		else
 			break
 		end
-	end
-	if count>=128 and not self.errord then
-		self.errord = true
-		debug.Trace()
-		ErrorNoHalt(tostring(self).." has infinite loop!!!\n")
 	end
 end
 

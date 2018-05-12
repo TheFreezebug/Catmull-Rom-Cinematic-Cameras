@@ -6,7 +6,7 @@ local function BuildBitFlagMessage(keys)
 	for k, v in pairs(keys) do
 		key_data = key_data + (2 ^ k)
 	end
-	--print("Key data: ", key_data)
+	print("Key data: ", key_data)
 	return key_data
 end
 
@@ -16,7 +16,7 @@ local function ExtractBitFlagMessage(key_data)
 	for i = 15, 1, -1 do
 		local bin_flag = 2 ^ i
 		
-		if bit.band(key_data , bin_flag) == bin_flag then
+		if (key_data and bin_flag) == bin_flag then
 			key_data = key_data - bin_flag
 			
 			keys[i] = i
@@ -24,7 +24,7 @@ local function ExtractBitFlagMessage(key_data)
 	end
 	
 	return keys
-end
+end 
 
 CatmullRomCams.SToolMethods.NumPadTrigger = STool
 

@@ -1,5 +1,5 @@
-AddCSLuaFile("cl_init.lua")
-AddCSLuaFile("shared.lua")
+AddCSLuaFile("cl_init.lua") 
+AddCSLuaFile("shared.lua") 
 include("shared.lua")
 
 local CAMERA_MODEL = Model("models/hunter/blocks/cube025x025x025.mdl")
@@ -16,7 +16,7 @@ ENT.PhysShadowControl.dampfactor       = 1
 ENT.PhysShadowControl.teleportdistance = 0
 ENT.PhysShadowControl.deltatime        = deltatime
 
-function ENT:Initialize()
+function ENT:Initialize() 
 	self.Entity:SetModel(CAMERA_MODEL)
 	self.Entity:PhysicsInit(SOLID_VPHYSICS)
 	self.Entity:SetMoveType(MOVETYPE_VPHYSICS)
@@ -214,9 +214,8 @@ end
 function ENT:GetSmartLookNodeCount()
 	self.SmartLookNodeCount = 1
 	self.SmartNodeOffset    = self.CatmullRomController.CurSegment
-	local i=9000
-	while i>=0 do
-		i=i-1
+	
+	while true do
 		if not (self.CatmullRomController.EntityList[self.CatmullRomController.CurSegment + self.SmartLookNodeCount] and self.CatmullRomController.EntityList[self.CatmullRomController.CurSegment + self.SmartLookNodeCount].SmartLookEnabled) then
 			break
 		end

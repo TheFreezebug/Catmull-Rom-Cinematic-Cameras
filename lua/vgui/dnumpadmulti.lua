@@ -1,4 +1,16 @@
+/*   _                                
+    ()                               
+   _| |   __   _ __   ___ ___     _ _ 
+ /'_` | /'__`\('__)/' _ ` _ `\ /'_`)
+((_| |(___/| |   | () () |((_| |
+`\__,_)`\____)(_)   (_) (_) (_)`\__,_) 
 
+	DNumPad
+	
+	A loverly multi-use numpad. Now can remember more then once key!
+
+*/
+ 
 local KP_PERIOD = 10
 local KP_ENTER  = 11
 local KP_PLUS   = 12
@@ -60,7 +72,7 @@ function PANEL:PerformLayout()
 	self.Buttons[KP_PERIOD]:SetSize(ButtonSize, ButtonSize)
 	self.Buttons[KP_PERIOD]:MoveRightOf(self.Buttons[0])
 	
-	self.Buttons[1]:SetSize(ButtonSize, ButtonSize)
+	self.Buttons[1]:SetSize(ButtonSize, ButtonSize)	
 	self.Buttons[1]:AlignLeft(Padding)
 	self.Buttons[1]:MoveAbove(self.Buttons[ 0 ])
 	self.Buttons[2]:CopyBounds(self.Buttons[1])
@@ -102,12 +114,13 @@ end
 
 function PANEL:AddKeyFlag(key_val, pButton)
 	local bin_flag = 2 ^ key_val
-	--print("Add")
-	--print("Key: ", key_val, "; Flag: ", bin_flag)
+	print("Add")
+	print("Key: ", key_val, "; Flag: ", bin_flag)
+	print(self.m_KeyFlags and bin_flag) 
 	pButton.LastToggle = CurTime() + .1 -- hackz
-	--print("---")
-
-	if bit.band(self.m_KeyFlags , bin_flag) ~= bin_flag then
+	print("---")
+	
+	if (self.m_KeyFlags and bin_flag) ~= bin_flag then
 		self.m_KeyFlags = self.m_KeyFlags + bin_flag
 		
 		self:UpdateConVar()
@@ -116,11 +129,17 @@ end
 
 function PANEL:RemoveKeyFlag(key_val, pButton)
 	local bin_flag = 2 ^ key_val
+	print(pButton.LastToggle)
+	print(CurTime())
 	if pButton.LastToggle > CurTime() then return end
+	print("Remove")
+	print("Key: ", key_val, "; Flag: ", bin_flag)
+	print(self.m_KeyFlags and bin_flag)
 	
-	--print("---")
+	
+	print("---")
 	--debug.Trace()
-	if bit.band(self.m_KeyFlags , bin_flag) == bin_flag then
+	if (self.m_KeyFlags and bin_flag) == bin_flag then
 		self.m_KeyFlags = self.m_KeyFlags - bin_flag
 		
 		self:UpdateConVar()
@@ -133,9 +152,9 @@ end
 
 function PANEL:UpdateConVar()
 	if self.m_CVarName then
-		--print("Update: ", self.m_KeyFlags)
+		print("Update: ", self.m_KeyFlags)
 		RunConsoleCommand(self.m_CVarName, self.m_KeyFlags)
-		--print("---")
+		print("---")
 	end
 end
 
@@ -152,7 +171,7 @@ function PANEL:SetupKeys(data)
 	
 	for k, _ in pairs(data) do
 		self.Buttons[k]:DoClick() -- ?
-		--print("Setting ", k, "...\n")
+		print("Setting ", k, "...\n")
 	end
 end
 

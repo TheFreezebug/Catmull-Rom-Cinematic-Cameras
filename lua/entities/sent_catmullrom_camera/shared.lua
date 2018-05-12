@@ -19,7 +19,7 @@ function ENT:TrackEntity(ent, lpos)
 	self.TrackEnt = ent
 	
 	return self:SetAngles(((ent:IsPlayer() and (ent:LocalToWorld(lpos) + Vector(0, 0, 54)) or ent:LocalToWorld(lpos)) - self:GetPos()):Angle())
-end
+end 
 
 function ENT:Toggle(ply)
 	if ply:GetNWEntity("UnderControlCatmullRomCamera") ~= NULL then
@@ -33,12 +33,12 @@ end
 
 function ENT:On(ply)
 	if SERVER and self:GetNWBool("IsMasterController") and (ply:GetNWEntity("UnderControlCatmullRomCamera") == NULL) then
-		--print("toggle on: ", ply)
+		print("toggle on: ", ply)
 		
 		self:GetPointData()
 		
 		if #self.CatmullRomController.PointsList < 4 then
-			return ply:ChatPrint("not enough points: "..#self.CatmullRomController.PointsList)
+			return print("not enough points: ", #self.CatmullRomController.PointsList)
 		end
 		
 		ply:SetNWEntity("UnderControlCatmullRomCamera", self)
@@ -73,7 +73,7 @@ end
 function ENT:Off(ply)
 	if self:GetNWBool("IsMasterController") and (ply:GetNWEntity("UnderControlCatmullRomCamera") == self) then
 		ply:SetNWEntity("UnderControlCatmullRomCamera", NULL)
-		--print("toggle off: ", ply)
+		print("toggle off: ", ply)
 		if self.ViewPointEnt and self.ViewPointEnt:IsValid() then
 			self.ViewPointEnt:Remove()
 		end
@@ -304,7 +304,7 @@ function ENT:GetPointData(terminating_entity_marker)
 	
 	self.CatmullRomController:AddPointAngle(count, lastent:GetPos(), lastent:GetAngles())
 	
-	while count<128 do
+	while true do
 		count = count + 1
 		
 		local ent = lastent:GetNWEntity("ChildCamera")
@@ -339,13 +339,7 @@ function ENT:GetPointData(terminating_entity_marker)
 			break
 		end
 	end
-
-	if count>=128 and not self.errord then
-		self.errord = true
-		debug.Trace()
-		ErrorNoHalt(tostring(self).." has infinite loop!!!\n")
-	end
-
+	
 	if CLIENT then
 		self.CatmullRomController.CLEntityListCount = #self.CatmullRomController.EntityList
 	end
@@ -425,11 +419,11 @@ function ENT:OnRemove()
 	else
 		self:RemoveGuideGhost()
 		
-		if not self.CLTrackIndex then
+		if not self.CLTrackIndex then 
 
 
 			if self:GetNWEntity("MasterController") then
-				self:GetNWEntity("MasterController"):GetPointData()
+				self:GetNWEntity("MasterController"):GetPointData() 
 			end
 			
 

@@ -61,10 +61,10 @@ function STool.CheckDistances(pos, aim, dist, ply)
 	local dist_a   = CatmullRomCams.SH.UnitsToMeters(pos:Distance(trace.HitPos))
 	
 	if (trace.Fraction == 1) then return true end
-	--print(trace.Fraction)
-	--print(dist_a)
-	--print(dist)
-	--print(CatmullRomCams.SH.MetersToUnits(dist) * -1 - 20)
+	print(trace.Fraction)
+	print(dist_a)
+	print(dist)
+	print(CatmullRomCams.SH.MetersToUnits(dist) * -1 - 20)
 	local TextA = "Error: You do not have enough clearance room to make this shot!"
 	local TextB = "Error: Clearance is " .. math.Round(dist_a) .. " of " .. math.Round(dist) .. " meters. An additional " .. ((1 - trace.Fraction) * dist) .. " meters is required."
 	

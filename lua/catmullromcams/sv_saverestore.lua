@@ -28,9 +28,9 @@ function CatmullRomCams.SV.Restore(restore_data)
 			for index, data in ipairs(track) do
 				CatmullRomCams.Tracks[plyID][numpad_key][index] = ents.GetByIndex(node.Ent)
 				CatmullRomCams.Tracks[plyID][numpad_key][index]:ApplyEngineSaveData(node.Data, index == 1)
-
-				--print("Loaded ", CatmullRomCams.Tracks[plyID][numpad_key][index], "'s saverestore data.\nDumping:")
-				--PrintTable(node.Data)
+				
+				print("Loaded ", CatmullRomCams.Tracks[plyID][numpad_key][index], "'s saverestore data.\nDumping:")
+				PrintTable(node.Data)
 			end
 		end
 	end

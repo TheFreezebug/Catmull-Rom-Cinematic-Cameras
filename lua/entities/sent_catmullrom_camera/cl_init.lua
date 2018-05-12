@@ -229,7 +229,7 @@ function ENT:DrawGuideBeam()
 	
     if self.GuideCameraGhost then
 
-	local VMC1 =  VectorUp * (math.sin(1 - math.abs(self.CatmullRomController.Perc - .5)) * .5 + .6)
+	local VMC1 =  VectorUp * (math.sin(1 - math.abs(self.CatmullRomController.Perc - .5)) * .5 + .6) 
 	local VMC2 = Matrix()
 	VMC2:Scale( VMC1 )
 	self.GuideCameraGhost:EnableMatrix( "RenderMultiply", VMC2 )
